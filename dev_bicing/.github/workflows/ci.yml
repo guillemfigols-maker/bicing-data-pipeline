@@ -1,0 +1,43 @@
+name: CI & Validation
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar codi del repositori
+        uses: actions/checkout@v4
+
+      - name: Instal·lar uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Configurar entorn Python
+        run: uv python install 3.11
+
+      - name: Instal·lar dependències
+        run: uv sync --all-extras --dev
+
+      - name: Executar tests amb pytest
+        run: uv run pytest
+
+      # Opcional: Validar la sintaxi del Databricks Bundle
+      - name: Configurar Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Validar Bundle de Databricks
+        run: databricks bundle validate
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
