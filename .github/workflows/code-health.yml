@@ -1,0 +1,27 @@
+- name: Code Health - Dev Herald
+  # You may pin to the exact commit or the version.
+  # uses: dev-herald/health@e1e5081cf869d350578fad71cfe8306cadcb7409
+  uses: dev-herald/health@v1
+  with:
+    # Dev Herald project API key
+    api-key: 
+    # Path to a Knip JSON report file (optional if a lockfile is present for CVE scanning)
+    knip-report-path: # optional, default is 
+    # Optional path to lockfile; otherwise auto-detects pnpm-lock.yaml, yarn.lock, package-lock.json, or bun.lock (CVE/OSV uses npm and pnpm only; yarn or bun emits a warning and skips CVE)
+    lockfile-path: # optional, default is 
+    # If true, fetch per-vulnerability details from OSV for per-issue severity and descriptions plus aggregate severity buckets (slower). If false, still sends vulnerable package names and OSV ids, without severities or descriptions.
+    cve-detail: # optional, default is false
+    # Dev Herald ingest API endpoint
+    api-url: # optional, default is https://dev-herald.com/api/v1/health/ingest
+    # owner/repo (defaults to GitHub context)
+    repository-full-name: # optional
+    # Commit SHA (defaults to GitHub context)
+    commit-sha: # optional
+    # Link to the workflow run
+    workflow-run-url: # optional
+    # Path to bundle analysis output (file or directory). Supported today: Next.js experimental-analyze --output dir, Turbopack route-bundle-stats.json, @next/bundle-analyzer dir (e.g. .next/analyze with client.json) or a single webpack-bundle-analyzer JSON file. Plain Webpack and Vite artifacts will use the same input as parsers are added.
+    bundle-stats-path: # optional, default is 
+    # YAML or JSON map of initiative slug to metric counts. Copy each slug and metric key from the initiative in the dashboard. Keys differ per initiative. Example: `emotion-to-panda: { files: 12, usages: 96 }` and `drop-ts-ignore: { directives: 40 }` in the same map. Omit to skip measurements. Set this or initiatives-path, not both.
+    initiatives: # optional, default is 
+    # Path to a JSON or YAML file with the same map as initiatives (slug to metric key to count). Relative paths are from the workspace root. Set this or initiatives, not both.
+    initiatives-path: # optional, default is 
